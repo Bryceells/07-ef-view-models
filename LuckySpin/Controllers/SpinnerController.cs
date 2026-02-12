@@ -82,7 +82,8 @@ namespace LuckySpin.Controllers
             PlayersChoice playersChoice = new PlayersChoice()
             {
                 //TODO: Pull data from the database for the properties of the view model.
-                Players = _dbContext.Players.ToList()
+                Players = _dbContext.Players.ToList(),
+                Games = _dbContext.Games.ToList()
 
             };
             return View(playersChoice);
@@ -93,12 +94,18 @@ namespace LuckySpin.Controllers
         {
             Player? player = _dbContext.Players.Find(SelectedPlayerId);
             //TODO: Use ModelState validation instead of the null check below
-            if (player == null) { return RedirectToAction("PlayersChoice"); } 
+            if (!ModelState.IsValid) { return RedirectToAction(nameof(PlayersChoice)); } 
+
             //Gift Balance for returning Players
             if (player.Balance == 0) { player.Balance = 5.0m; }
 
             //TODO: Create a new Game for the selected Player, save it to the database, and redirect to the Spin Action to start playing with the Game ID
-            return RedirectToAction("PlayersChoice");
+            var game = new Game(){ 
+                Player = player
+            };
+            _dbContext.Games.Add(game);
+            _dbContext.SaveChanges();
+            return RedirectToAction(nameof(Spin), new{gameId = game.Id});
         }
 
     }

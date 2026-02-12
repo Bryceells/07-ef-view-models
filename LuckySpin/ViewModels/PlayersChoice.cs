@@ -7,5 +7,6 @@ namespace LuckySpin.ViewModels
         //TODO: Add  additional properties needed to pre-fill the PlayersChoice View.
         public ICollection<Player> Players { get; set; }
 
+        public ICollection<Game> Games { get; set; }
     }
 }

@@ -5,8 +5,8 @@
     Layout = "_Layout";
     //TODO: After getting the other TODOs complete and running.
     //Uncomment the lines below (one at a time) and see how the Players and Games are ordered in the ViewModel
-    //Model.Players = Model.Players.OrderBy(p => p.FirstName).ThenBy(p => p.Luck).ToList();
-    //Model.Games = Model.Games.OrderByDescending(g => g.Spins.Count).ToList();
+    Model.Players = Model.Players.OrderBy(p => p.FirstName).ThenBy(p => p.Luck).ToList();
+    Model.Games = Model.Games.OrderByDescending(g => g.Spins.Count).ToList();
 }
 
 <h1>Lucky Spin</h1> 
@@ -16,11 +16,11 @@
     <label>
         <!-- TODO: Create a dropdown list of Players to choose from, displaying their name and luck number. 
         (see the Index view for an example of how to do this with tag helpers) -->
-       <select asp-for = "Player">
+       <select name = "SelectedPlayerId">
             <option selected disabled>Choose Player</option>
             @foreach (Player player in Model.Players)
             {
-                <option value="@player.FirstName">@player.FirstName, Luck: @player.Luck</option>
+                <option value="@player.Id">@player.FirstName, Luck: @player.Luck</option>
             }
 
        </select>
@@ -36,7 +36,14 @@
     <thead><tr><th>Game</th><th>Player</th><th>Number of Spins</th></tr></thead>
     <tbody>
         <!--TODO: display this list of games with the info above (remember Games has an iCollection of Spins) -->
-
+        @foreach (Game game in Model.Games)
+        {
+            <tr>
+                <td>@game.Id</td>
+                <td>@game.Player.FirstName</td>
+                <td>@game.Spins.Count</td>
+            </tr>
+        }
     </tdbody>
     </table>
 
