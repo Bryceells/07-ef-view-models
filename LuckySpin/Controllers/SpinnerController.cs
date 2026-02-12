@@ -82,6 +82,7 @@ namespace LuckySpin.Controllers
             PlayersChoice playersChoice = new PlayersChoice()
             {
                 //TODO: Pull data from the database for the properties of the view model.
+                Players = _dbContext.Players.ToList()
 
             };
             return View(playersChoice);

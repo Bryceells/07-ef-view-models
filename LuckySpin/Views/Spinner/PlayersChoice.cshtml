@@ -16,7 +16,15 @@
     <label>
         <!-- TODO: Create a dropdown list of Players to choose from, displaying their name and luck number. 
         (see the Index view for an example of how to do this with tag helpers) -->
-       
+       <select asp-for = "Player">
+            <option selected disabled>Choose Player</option>
+            @foreach (Player player in Model.Players)
+            {
+                <option value="@player.FirstName">@player.FirstName, Luck: @player.Luck</option>
+            }
+
+       </select>
+
 
     </label>
 </fieldset>
